@@ -1,33 +1,79 @@
-# -*- coding: utf-8 -*-
-"""Modulo principal del gestor de inventario y ventas de "La Esquina".
+"""Logica de negocio del gestor de inventario y ventas de "La Esquina".
 
-Aqui vive casi toda la logica del negocio. Historicamente este archivo
-lo fueron parchando varias personas, asi que hay de todo un poco.
+Contiene las reglas de precios (descuentos e IVA), el estado global
+(inventario, ventas, folio y ultimo error) y las operaciones sobre productos,
+ventas y cotizaciones. Cuando algo falla, las funciones regresan False o None
+y dejan el motivo en ``ultimo_error``.
 """
 
 from datetime import datetime
+from typing import Any
+
+# Registros como diccionarios: el contrato (y los tests) exige dict.
+Producto = dict[str, Any]
+Venta = dict[str, Any]
+
+# ---------------------------------------------------------------
+# Reglas de negocio
+# ---------------------------------------------------------------
+UMBRAL_DESCUENTO_ALTO = 1000
+TASA_DESCUENTO_ALTO = 0.10
+UMBRAL_DESCUENTO_MEDIO = 500
+TASA_DESCUENTO_MEDIO = 0.05
+PREFIJO_VIP = "VIP"
+MONTO_MINIMO_VIP = 200
+TASA_DESCUENTO_VIP = 0.02
+TASA_IVA = 0.16
+FORMATO_FECHA = "%Y-%m-%d %H:%M:%S"
+ENCABEZADO_TICKET = "TIENDA LA ESQUINA"
+SEPARADOR_TICKET = "-" * 28
 
 # ---------------------------------------------------------------
 # Estado global de la aplicacion (inventario, ventas y contadores)
 # ---------------------------------------------------------------
-INVENTARIO = {}
-VENTAS = []
-contadorVentas = 0
-ultimo_error = ""
-MODO_DEBUG = False
+INVENTARIO: dict[str, Producto] = {}
+VENTAS: list[Venta] = []
+contador_ventas: int = 0
+ultimo_error: str = ""
 
 
-def reiniciar_sistema():
+def calcular_descuento(subtotal: float, cliente: str | None = "") -> float:
+    """Descuento por volumen y, si el cliente es VIP, el extra correspondiente."""
+    descuento = 0
+    if subtotal >= UMBRAL_DESCUENTO_ALTO:
+        descuento = subtotal * TASA_DESCUENTO_ALTO
+    elif subtotal >= UMBRAL_DESCUENTO_MEDIO:
+        descuento = subtotal * TASA_DESCUENTO_MEDIO
+    # el extra VIP solo aplica si la compra (ya con descuento) pasa del minimo
+    if (
+        cliente
+        and cliente.startswith(PREFIJO_VIP)
+        and subtotal - descuento > MONTO_MINIMO_VIP
+    ):
+        descuento = descuento + subtotal * TASA_DESCUENTO_VIP
+    return descuento
+
+
+def calcular_impuesto(base: float) -> float:
+    """IVA sobre la base (subtotal menos descuentos)."""
+    return base * TASA_IVA
+
+
+def reiniciar_sistema() -> None:
     """Borra todo el estado del sistema (inventario, ventas y folios)."""
-    global contadorVentas, ultimo_error
+    global contador_ventas, ultimo_error
     INVENTARIO.clear()
     VENTAS.clear()
-    contadorVentas = 0
+    contador_ventas = 0
     ultimo_error = ""
 
 
-def agregarProducto(codigo, nombre, precio, stock):
-    # valida los datos y da de alta un producto en el inventario
+def agregarProducto(codigo: str, nombre: str, precio: float, stock: int) -> bool:
+    """Da de alta un producto en el inventario.
+
+    Regresa False si el codigo esta vacio o repetido, o si el precio o el
+    stock son invalidos; el motivo queda en ultimo_error.
+    """
     global ultimo_error
     if codigo is None or codigo == "":
         ultimo_error = "codigo vacio"
@@ -41,16 +87,16 @@ def agregarProducto(codigo, nombre, precio, stock):
     if stock < 0:
         ultimo_error = "stock invalido"
         return False
-    x = {}
-    x["codigo"] = codigo
-    x["nombre"] = nombre
-    x["precio"] = precio
-    x["stock"] = stock
-    INVENTARIO[codigo] = x
+    INVENTARIO[codigo] = {
+        "codigo": codigo,
+        "nombre": nombre,
+        "precio": precio,
+        "stock": stock,
+    }
     return True
 
 
-def eliminar_producto(codigo):
+def eliminar_producto(codigo: str) -> bool:
     """Quita un producto del inventario. Regresa False si no existe."""
     global ultimo_error
     if codigo in INVENTARIO:
@@ -60,109 +106,114 @@ def eliminar_producto(codigo):
     return False
 
 
-def actualizar_stock(codigo, cantidad):
+def actualizar_stock(codigo: str, cantidad: int) -> bool:
     """Suma unidades al stock (o resta si la cantidad es negativa)."""
     global ultimo_error
     if codigo not in INVENTARIO:
         ultimo_error = "producto no existe"
         return False
-    aux = INVENTARIO[codigo]["stock"] + cantidad
-    if aux < 0:
+    stock_nuevo = INVENTARIO[codigo]["stock"] + cantidad
+    if stock_nuevo < 0:
         ultimo_error = "el stock no puede quedar negativo"
         return False
-    INVENTARIO[codigo]["stock"] = aux
+    INVENTARIO[codigo]["stock"] = stock_nuevo
     return True
 
 
-def buscarProducto(texto):
-    # busca productos cuyo nombre contenga el texto (sin importar mayusculas)
-    temp2 = []
-    for k in INVENTARIO:
-        if texto.lower() in INVENTARIO[k]["nombre"].lower():
-            temp2.append(INVENTARIO[k])
-    return temp2
+def buscarProducto(texto: str) -> list[Producto]:
+    """Productos cuyo nombre contiene el texto, sin distinguir mayusculas."""
+    # texto.lower() se evalua dentro de la comprension (no antes): con el
+    # inventario vacio, buscarProducto(None) regresa [] en lugar de fallar
+    return [
+        producto for producto in INVENTARIO.values()
+        if texto.lower() in producto["nombre"].lower()
+    ]
 
 
-def registrar_venta(codigo, cantidad, cliente=""):
-    """Registra una venta completa.
+def _validar_venta(codigo: str, cantidad: int) -> bool:
+    """Valida una venta; si no procede deja el motivo en ultimo_error.
 
-    Esta funcion hace de todo: valida los datos, calcula descuentos e
-    impuestos, descuenta el stock, genera el folio, arma el ticket en
-    texto y guarda el registro en la lista de ventas. Si algo falla
-    regresa None y deja el motivo en ultimo_error.
+    Las validaciones van en este orden y se detienen en la primera que falla.
+    Se niegan las condiciones originales (``not cantidad > 0``) en lugar de
+    invertirlas (``cantidad <= 0``) porque no son equivalentes con NaN.
     """
-    global contadorVentas, ultimo_error
-    temp2 = None
-    if codigo is not None and codigo != "":
-        if codigo in INVENTARIO:
-            if cantidad is not None and cantidad > 0:
-                if INVENTARIO[codigo]["stock"] >= cantidad:
-                    temp2 = INVENTARIO[codigo]
-                else:
-                    ultimo_error = "stock insuficiente"
-                    return None
-            else:
-                ultimo_error = "cantidad invalida"
-                return None
-        else:
-            ultimo_error = "producto no existe"
-            return None
-    else:
+    global ultimo_error
+    if codigo is None or codigo == "":
         ultimo_error = "codigo vacio"
+        return False
+    if codigo not in INVENTARIO:
+        ultimo_error = "producto no existe"
+        return False
+    if cantidad is None or not cantidad > 0:
+        ultimo_error = "cantidad invalida"
+        return False
+    if not INVENTARIO[codigo]["stock"] >= cantidad:
+        ultimo_error = "stock insuficiente"
+        return False
+    return True
+
+
+def _generar_ticket(venta: Venta, descuento: float) -> str:
+    """Texto del ticket de una venta registrada.
+
+    `descuento` es el monto sin redondear: la linea de descuento solo aparece
+    si es mayor que cero.
+    """
+    lineas = [
+        ENCABEZADO_TICKET,
+        SEPARADOR_TICKET,
+        f"Folio: {venta['folio']}",
+        f"{venta['nombre']} x{venta['cantidad']}",
+        f"Subtotal: ${venta['subtotal']}",
+    ]
+    if descuento > 0:
+        lineas.append(f"Descuento: -${venta['descuento']}")
+    lineas.append(f"IVA: ${venta['impuesto']}")
+    lineas.append(f"TOTAL: ${venta['total']}")
+    return "\n".join(lineas) + "\n"
+
+
+def registrar_venta(
+    codigo: str, cantidad: int, cliente: str | None = ""
+) -> Venta | None:
+    """Registra una venta: valida, calcula montos, descuenta stock y genera el ticket.
+
+    Si algo falla regresa None y deja el motivo en ultimo_error.
+    """
+    global contador_ventas
+    if not _validar_venta(codigo, cantidad):
         return None
-    # calculo del subtotal
-    aux = temp2["precio"] * cantidad
-    # descuentos por volumen de compra
-    desc = 0
-    if aux >= 1000:
-        desc = aux * 0.10
-    else:
-        if aux >= 500:
-            desc = aux * 0.05
-        else:
-            desc = 0
-    # los clientes cuyo codigo empieza con VIP tienen un extra,
-    # pero solo si su compra (ya con descuento) pasa de cierto monto
-    if cliente != "" and cliente is not None:
-        if len(cliente) >= 3:
-            if cliente[0:3] == "VIP":
-                if aux - desc > 200:
-                    desc = desc + aux * 0.02
-    base = aux - desc
-    impuesto = base * 0.16
+    producto = INVENTARIO[codigo]
+    subtotal = producto["precio"] * cantidad
+    descuento = calcular_descuento(subtotal, cliente)
+    base = subtotal - descuento
+    impuesto = calcular_impuesto(base)
     total = round(base + impuesto, 2)
-    # descontar del inventario
-    temp2["stock"] = temp2["stock"] - cantidad
-    contadorVentas = contadorVentas + 1
-    venta = {}
-    venta["folio"] = contadorVentas
-    venta["codigo"] = codigo
-    venta["nombre"] = temp2["nombre"]
-    venta["cantidad"] = cantidad
-    venta["subtotal"] = round(aux, 2)
-    venta["descuento"] = round(desc, 2)
-    venta["impuesto"] = round(impuesto, 2)
-    venta["total"] = total
-    venta["cliente"] = cliente
-    venta["fecha"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # armar el ticket en texto plano
-    t = ""
-    t = t + "TIENDA LA ESQUINA\n"
-    t = t + "----------------------------\n"
-    t = t + "Folio: " + str(venta["folio"]) + "\n"
-    t = t + venta["nombre"] + " x" + str(cantidad) + "\n"
-    t = t + "Subtotal: $" + str(venta["subtotal"]) + "\n"
-    if desc > 0:
-        t = t + "Descuento: -$" + str(venta["descuento"]) + "\n"
-    t = t + "IVA: $" + str(venta["impuesto"]) + "\n"
-    t = t + "TOTAL: $" + str(venta["total"]) + "\n"
-    venta["ticket"] = t
+    producto["stock"] = producto["stock"] - cantidad
+    contador_ventas = contador_ventas + 1
+    venta = {
+        "folio": contador_ventas,
+        "codigo": codigo,
+        "nombre": producto["nombre"],
+        "cantidad": cantidad,
+        "subtotal": round(subtotal, 2),
+        "descuento": round(descuento, 2),
+        "impuesto": round(impuesto, 2),
+        "total": total,
+        "cliente": cliente,
+        "fecha": datetime.now().strftime(FORMATO_FECHA),
+    }
+    venta["ticket"] = _generar_ticket(venta, descuento)
     VENTAS.append(venta)
     return venta
 
 
-def cotizar(codigo, cantidad):
-    """Calcula cuanto costaria una compra sin registrar la venta."""
+def cotizar(codigo: str, cantidad: int) -> float | None:
+    """Calcula cuanto costaria una compra sin registrar la venta.
+
+    Regresa None si el producto no existe o la cantidad es invalida; el motivo
+    queda en ultimo_error.
+    """
     global ultimo_error
     if codigo not in INVENTARIO:
         ultimo_error = "producto no existe"
@@ -170,29 +221,9 @@ def cotizar(codigo, cantidad):
     if cantidad is None or cantidad <= 0:
         ultimo_error = "cantidad invalida"
         return None
-    aux = INVENTARIO[codigo]["precio"] * cantidad
-    desc = 0
-    if aux >= 1000:
-        desc = aux * 0.10
-    else:
-        if aux >= 500:
-            desc = aux * 0.05
-    base = aux - desc
-    total = base + base * 0.16
+    subtotal = INVENTARIO[codigo]["precio"] * cantidad
+    # la cotizacion no recibe cliente: nunca aplica el extra VIP
+    descuento = calcular_descuento(subtotal)
+    base = subtotal - descuento
+    total = base + calcular_impuesto(base)
     return round(total, 2)
-
-
-def calcular_descuento_viejo(monto):
-    # NOTA: esta era la formula de descuentos que se uso hasta 2023,
-    # ya nadie la llama pero la dejamos por si acaso
-    if monto > 800:
-        return monto * 0.08
-    return 0
-
-
-# def exportar_txt(ruta):
-#     f = open(ruta, "w")
-#     for k in INVENTARIO:
-#         f.write(k + " - " + str(INVENTARIO[k]["stock"]) + "\n")
-#     f.close()
-#     return True
