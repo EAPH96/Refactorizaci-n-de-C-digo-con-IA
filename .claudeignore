@@ -1,0 +1,45 @@
+# .claudeignore — archivos que Claude Code no necesita leer en este reto.
+# Sintaxis tipo .gitignore. Justificación detallada en
+# Documentación/01-configuracion-entorno/configuracion-entorno.md
+#
+# NO se ignoran a propósito: tests/ (son el contrato de comportamiento: se leen,
+# no se editan), pyproject.toml (define qué cuenta como error de ruff),
+# README.md y datos_ejemplo.json de la raíz (muestra el formato de datos).
+
+# --- Entornos virtuales: dependencias de terceros (pytest, ruff), solo ruido
+.venv/
+venv/
+env/
+ENV/
+
+# --- Bytecode y cachés de herramientas: se regeneran solos
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- Datos generados al ejecutar la app desde src/ (no son la fuente de datos)
+src/datos_ejemplo.json
+*.log
+
+# --- Vistas HTML generadas desde Markdown (la fuente es el .md hermano)
+Documentación/**/*.html
+
+# --- Basura del sistema operativo y configuración local de editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# --- Artefactos de empaquetado
+build/
+dist/
+*.egg-info/
+
+# --- Metadatos internos de Git (usar comandos git en su lugar)
+.git/

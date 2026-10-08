@@ -1,0 +1,38 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Bytecode y cachés de herramientas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Datos generados al ejecutar la app desde src/ (ver Q-01 en la investigación)
+src/datos_ejemplo.json
+*.log
+
+# Documentación de trabajo local: investigación, plan, prompts, caracterización,
+# visor HTML y config.yaml. No forma parte del entregable del PR.
+Documentación/
+
+# Configuración local de Claude Code (permisos de esta máquina)
+.claude/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Empaquetado
+build/
+dist/
+*.egg-info/
