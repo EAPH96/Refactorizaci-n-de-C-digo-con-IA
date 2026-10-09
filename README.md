@@ -32,9 +32,15 @@ Code como asistente.
 
 ## Instalación y ejecución
 
-Requiere Python 3.10 o superior.
+Requiere Python 3.10 o superior y Git. Las dependencias de `requirements.txt`
+son solo de desarrollo: `pytest` (pruebas) y `ruff` (linter); la aplicación
+no usa librerías externas.
 
 ```bash
+# 0. Clonar el repositorio
+git clone https://github.com/EAPH96/Refactorizaci-n-de-C-digo-con-IA.git
+cd Refactorizaci-n-de-C-digo-con-IA
+
 # 1. Crear y activar un entorno virtual
 python -m venv .venv
 source .venv/bin/activate        # En Windows: .venv\Scripts\activate
