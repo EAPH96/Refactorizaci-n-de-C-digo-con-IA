@@ -18,7 +18,7 @@ calidad sin cambiar el comportamiento**, una refactorización a la vez, y
 documentar cada paso.
 
 - Diagnóstico completo: `Documentación/00-investigacion/investigacion.md`
-  (code smells `CS-xx`, problemas `Q-xx`, plan `R1…R10`, contrato de comportamiento).
+  (code smells `CS-xx`, problemas `Q-xx`, plan `R1…R9`, contrato de comportamiento).
 - Plan de refactorización y prompts por fase: `Documentación/02-plan-refactorizacion/plan-refactorizacion.md`.
 - Stack tecnológico: `Documentación/config.yaml`.
 - `Documentación/` es **local** (está en `.gitignore`): no forma parte del PR.
