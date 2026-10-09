@@ -1,10 +1,17 @@
-"""Modulo principal del gestor de inventario y ventas de "La Esquina".
+"""Logica de negocio del gestor de inventario y ventas de "La Esquina".
 
-Aqui vive casi toda la logica del negocio. Historicamente este archivo
-lo fueron parchando varias personas, asi que hay de todo un poco.
+Contiene las reglas de precios (descuentos e IVA), el estado global
+(inventario, ventas, folio y ultimo error) y las operaciones sobre productos,
+ventas y cotizaciones. Cuando algo falla, las funciones regresan False o None
+y dejan el motivo en ``ultimo_error``.
 """
 
 from datetime import datetime
+from typing import Any
+
+# Registros como diccionarios: el contrato (y los tests) exige dict.
+Producto = dict[str, Any]
+Venta = dict[str, Any]
 
 # ---------------------------------------------------------------
 # Reglas de negocio
@@ -24,13 +31,13 @@ SEPARADOR_TICKET = "-" * 28
 # ---------------------------------------------------------------
 # Estado global de la aplicacion (inventario, ventas y contadores)
 # ---------------------------------------------------------------
-INVENTARIO = {}
-VENTAS = []
-contador_ventas = 0
-ultimo_error = ""
+INVENTARIO: dict[str, Producto] = {}
+VENTAS: list[Venta] = []
+contador_ventas: int = 0
+ultimo_error: str = ""
 
 
-def calcular_descuento(subtotal, cliente=""):
+def calcular_descuento(subtotal: float, cliente: str | None = "") -> float:
     """Descuento por volumen y, si el cliente es VIP, el extra correspondiente."""
     descuento = 0
     if subtotal >= UMBRAL_DESCUENTO_ALTO:
@@ -47,12 +54,12 @@ def calcular_descuento(subtotal, cliente=""):
     return descuento
 
 
-def calcular_impuesto(base):
+def calcular_impuesto(base: float) -> float:
     """IVA sobre la base (subtotal menos descuentos)."""
     return base * TASA_IVA
 
 
-def reiniciar_sistema():
+def reiniciar_sistema() -> None:
     """Borra todo el estado del sistema (inventario, ventas y folios)."""
     global contador_ventas, ultimo_error
     INVENTARIO.clear()
@@ -61,8 +68,12 @@ def reiniciar_sistema():
     ultimo_error = ""
 
 
-def agregarProducto(codigo, nombre, precio, stock):
-    # valida los datos y da de alta un producto en el inventario
+def agregarProducto(codigo: str, nombre: str, precio: float, stock: int) -> bool:
+    """Da de alta un producto en el inventario.
+
+    Regresa False si el codigo esta vacio o repetido, o si el precio o el
+    stock son invalidos; el motivo queda en ultimo_error.
+    """
     global ultimo_error
     if codigo is None or codigo == "":
         ultimo_error = "codigo vacio"
@@ -85,7 +96,7 @@ def agregarProducto(codigo, nombre, precio, stock):
     return True
 
 
-def eliminar_producto(codigo):
+def eliminar_producto(codigo: str) -> bool:
     """Quita un producto del inventario. Regresa False si no existe."""
     global ultimo_error
     if codigo in INVENTARIO:
@@ -95,7 +106,7 @@ def eliminar_producto(codigo):
     return False
 
 
-def actualizar_stock(codigo, cantidad):
+def actualizar_stock(codigo: str, cantidad: int) -> bool:
     """Suma unidades al stock (o resta si la cantidad es negativa)."""
     global ultimo_error
     if codigo not in INVENTARIO:
@@ -109,8 +120,8 @@ def actualizar_stock(codigo, cantidad):
     return True
 
 
-def buscarProducto(texto):
-    # busca productos cuyo nombre contenga el texto (sin importar mayusculas)
+def buscarProducto(texto: str) -> list[Producto]:
+    """Productos cuyo nombre contiene el texto, sin distinguir mayusculas."""
     # texto.lower() se evalua dentro de la comprension (no antes): con el
     # inventario vacio, buscarProducto(None) regresa [] en lugar de fallar
     return [
@@ -119,7 +130,7 @@ def buscarProducto(texto):
     ]
 
 
-def _validar_venta(codigo, cantidad):
+def _validar_venta(codigo: str, cantidad: int) -> bool:
     """Valida una venta; si no procede deja el motivo en ultimo_error.
 
     Las validaciones van en este orden y se detienen en la primera que falla.
@@ -142,7 +153,7 @@ def _validar_venta(codigo, cantidad):
     return True
 
 
-def _generar_ticket(venta, descuento):
+def _generar_ticket(venta: Venta, descuento: float) -> str:
     """Texto del ticket de una venta registrada.
 
     `descuento` es el monto sin redondear: la linea de descuento solo aparece
@@ -162,7 +173,9 @@ def _generar_ticket(venta, descuento):
     return "\n".join(lineas) + "\n"
 
 
-def registrar_venta(codigo, cantidad, cliente=""):
+def registrar_venta(
+    codigo: str, cantidad: int, cliente: str | None = ""
+) -> Venta | None:
     """Registra una venta: valida, calcula montos, descuenta stock y genera el ticket.
 
     Si algo falla regresa None y deja el motivo en ultimo_error.
@@ -195,8 +208,12 @@ def registrar_venta(codigo, cantidad, cliente=""):
     return venta
 
 
-def cotizar(codigo, cantidad):
-    """Calcula cuanto costaria una compra sin registrar la venta."""
+def cotizar(codigo: str, cantidad: int) -> float | None:
+    """Calcula cuanto costaria una compra sin registrar la venta.
+
+    Regresa None si el producto no existe o la cantidad es invalida; el motivo
+    queda en ultimo_error.
+    """
     global ultimo_error
     if codigo not in INVENTARIO:
         ultimo_error = "producto no existe"

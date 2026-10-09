@@ -6,17 +6,17 @@ STOCK_MINIMO = 5
 TOP_MAS_VENDIDOS = 3
 
 
-def formatear_dinero(monto):
-    # le da formato de dinero al numero
+def formatear_dinero(monto: float) -> str:
+    """Monto con signo de pesos y a lo mas 2 decimales (por ejemplo, $23.2)."""
     return "$" + str(round(monto, 2))
 
 
-def _es_stock_bajo(producto):
+def _es_stock_bajo(producto: gestor.Producto) -> bool:
     """Indica si el producto tiene menos unidades que el stock minimo."""
     return producto["stock"] < STOCK_MINIMO
 
 
-def productos_stock_bajo():
+def productos_stock_bajo() -> list[gestor.Producto]:
     """Regresa la lista de productos con stock por debajo del minimo."""
     return [
         producto for producto in gestor.INVENTARIO.values()
@@ -24,7 +24,7 @@ def productos_stock_bajo():
     ]
 
 
-def reporte_inventario():
+def reporte_inventario() -> str:
     """Arma el reporte del inventario, lo imprime y lo regresa como texto."""
     lineas = ["===== INVENTARIO ====="]
     # acumulado en bucle (no sum()): en Python >= 3.12 sum() usa suma
@@ -48,7 +48,7 @@ def reporte_inventario():
     return texto
 
 
-def total_vendido():
+def total_vendido() -> float:
     """Suma el total (con IVA) de todas las ventas registradas."""
     total = 0
     for venta in gestor.VENTAS:
@@ -56,7 +56,7 @@ def total_vendido():
     return round(total, 2)
 
 
-def mas_vendidos(n=TOP_MAS_VENDIDOS):
+def mas_vendidos(n: int = TOP_MAS_VENDIDOS) -> list[tuple[str, float]]:
     """Regresa los n productos mas vendidos como lista de (codigo, unidades)."""
     unidades_por_codigo = {}
     for venta in gestor.VENTAS:
@@ -74,7 +74,7 @@ def mas_vendidos(n=TOP_MAS_VENDIDOS):
     return ranking[:n]
 
 
-def resumen_ventas():
+def resumen_ventas() -> str:
     """Arma el resumen de ventas del dia, lo imprime y lo regresa."""
     lineas = ["===== RESUMEN DE VENTAS ====="]
     for venta in gestor.VENTAS:
