@@ -118,6 +118,29 @@ def buscarProducto(texto):
     return temp2
 
 
+def _validar_venta(codigo, cantidad):
+    """Valida una venta; si no procede deja el motivo en ultimo_error.
+
+    Las validaciones van en este orden y se detienen en la primera que falla.
+    Se niegan las condiciones originales (``not cantidad > 0``) en lugar de
+    invertirlas (``cantidad <= 0``) porque no son equivalentes con NaN.
+    """
+    global ultimo_error
+    if codigo is None or codigo == "":
+        ultimo_error = "codigo vacio"
+        return False
+    if codigo not in INVENTARIO:
+        ultimo_error = "producto no existe"
+        return False
+    if cantidad is None or not cantidad > 0:
+        ultimo_error = "cantidad invalida"
+        return False
+    if not INVENTARIO[codigo]["stock"] >= cantidad:
+        ultimo_error = "stock insuficiente"
+        return False
+    return True
+
+
 def registrar_venta(codigo, cantidad, cliente=""):
     """Registra una venta completa.
 
@@ -126,25 +149,10 @@ def registrar_venta(codigo, cantidad, cliente=""):
     texto y guarda el registro en la lista de ventas. Si algo falla
     regresa None y deja el motivo en ultimo_error.
     """
-    global contadorVentas, ultimo_error
-    temp2 = None
-    if codigo is not None and codigo != "":
-        if codigo in INVENTARIO:
-            if cantidad is not None and cantidad > 0:
-                if INVENTARIO[codigo]["stock"] >= cantidad:
-                    temp2 = INVENTARIO[codigo]
-                else:
-                    ultimo_error = "stock insuficiente"
-                    return None
-            else:
-                ultimo_error = "cantidad invalida"
-                return None
-        else:
-            ultimo_error = "producto no existe"
-            return None
-    else:
-        ultimo_error = "codigo vacio"
+    global contadorVentas
+    if not _validar_venta(codigo, cantidad):
         return None
+    temp2 = INVENTARIO[codigo]
     # calculo del subtotal
     aux = temp2["precio"] * cantidad
     desc = calcular_descuento(aux, cliente)
