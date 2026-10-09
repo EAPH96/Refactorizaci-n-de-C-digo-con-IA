@@ -76,12 +76,12 @@ def agregarProducto(codigo, nombre, precio, stock):
     if stock < 0:
         ultimo_error = "stock invalido"
         return False
-    x = {}
-    x["codigo"] = codigo
-    x["nombre"] = nombre
-    x["precio"] = precio
-    x["stock"] = stock
-    INVENTARIO[codigo] = x
+    INVENTARIO[codigo] = {
+        "codigo": codigo,
+        "nombre": nombre,
+        "precio": precio,
+        "stock": stock,
+    }
     return True
 
 
@@ -141,50 +141,55 @@ def _validar_venta(codigo, cantidad):
     return True
 
 
-def registrar_venta(codigo, cantidad, cliente=""):
-    """Registra una venta completa.
+def _generar_ticket(venta, descuento):
+    """Texto del ticket de una venta registrada.
 
-    Esta funcion hace de todo: valida los datos, calcula descuentos e
-    impuestos, descuenta el stock, genera el folio, arma el ticket en
-    texto y guarda el registro en la lista de ventas. Si algo falla
-    regresa None y deja el motivo en ultimo_error.
+    `descuento` es el monto sin redondear: la linea de descuento solo aparece
+    si es mayor que cero.
+    """
+    lineas = [
+        ENCABEZADO_TICKET,
+        SEPARADOR_TICKET,
+        f"Folio: {venta['folio']}",
+        f"{venta['nombre']} x{venta['cantidad']}",
+        f"Subtotal: ${venta['subtotal']}",
+    ]
+    if descuento > 0:
+        lineas.append(f"Descuento: -${venta['descuento']}")
+    lineas.append(f"IVA: ${venta['impuesto']}")
+    lineas.append(f"TOTAL: ${venta['total']}")
+    return "\n".join(lineas) + "\n"
+
+
+def registrar_venta(codigo, cantidad, cliente=""):
+    """Registra una venta: valida, calcula montos, descuenta stock y genera el ticket.
+
+    Si algo falla regresa None y deja el motivo en ultimo_error.
     """
     global contadorVentas
     if not _validar_venta(codigo, cantidad):
         return None
     temp2 = INVENTARIO[codigo]
-    # calculo del subtotal
     aux = temp2["precio"] * cantidad
     desc = calcular_descuento(aux, cliente)
     base = aux - desc
     impuesto = calcular_impuesto(base)
     total = round(base + impuesto, 2)
-    # descontar del inventario
     temp2["stock"] = temp2["stock"] - cantidad
     contadorVentas = contadorVentas + 1
-    venta = {}
-    venta["folio"] = contadorVentas
-    venta["codigo"] = codigo
-    venta["nombre"] = temp2["nombre"]
-    venta["cantidad"] = cantidad
-    venta["subtotal"] = round(aux, 2)
-    venta["descuento"] = round(desc, 2)
-    venta["impuesto"] = round(impuesto, 2)
-    venta["total"] = total
-    venta["cliente"] = cliente
-    venta["fecha"] = datetime.now().strftime(FORMATO_FECHA)
-    # armar el ticket en texto plano
-    t = ""
-    t = t + ENCABEZADO_TICKET + "\n"
-    t = t + SEPARADOR_TICKET + "\n"
-    t = t + "Folio: " + str(venta["folio"]) + "\n"
-    t = t + venta["nombre"] + " x" + str(cantidad) + "\n"
-    t = t + "Subtotal: $" + str(venta["subtotal"]) + "\n"
-    if desc > 0:
-        t = t + "Descuento: -$" + str(venta["descuento"]) + "\n"
-    t = t + "IVA: $" + str(venta["impuesto"]) + "\n"
-    t = t + "TOTAL: $" + str(venta["total"]) + "\n"
-    venta["ticket"] = t
+    venta = {
+        "folio": contadorVentas,
+        "codigo": codigo,
+        "nombre": temp2["nombre"],
+        "cantidad": cantidad,
+        "subtotal": round(aux, 2),
+        "descuento": round(desc, 2),
+        "impuesto": round(impuesto, 2),
+        "total": total,
+        "cliente": cliente,
+        "fecha": datetime.now().strftime(FORMATO_FECHA),
+    }
+    venta["ticket"] = _generar_ticket(venta, desc)
     VENTAS.append(venta)
     return venta
 
