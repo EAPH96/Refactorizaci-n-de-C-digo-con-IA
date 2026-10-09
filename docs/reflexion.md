@@ -27,10 +27,13 @@ Mucho, que puede oprimizarse este proceso que puede llegar a ser repetitivo dent
 
 | Métrica | Inicio | Final |
 |---|---|---|
-| `pytest` | 20 passed | |
-| `ruff check src` | 20 errores | |
-| Refactorizaciones aplicadas | 0 | |
-| Complejidad máx. (`registrar_venta` / `menu`) | 12 / 17 | |
+| `pytest` (suite oficial) | 20 passed | 20 passed |
+| `ruff check src` | 20 errores | 0 errores |
+| Refactorizaciones aplicadas | 0 | 10 |
+| Complejidad máx. (`registrar_venta` / `menu`) | 12 / 17 | 2 / 4 |
+| Pruebas adicionales (`tests_caracterizacion/`) | 0 | 20 passed |
+| Funciones con type hints | 0 de 20 | 31 de 31 |
+| Funciones sin docstring | 8 de 20 | 0 de 31 |
 
 ## Conclusiones
 
