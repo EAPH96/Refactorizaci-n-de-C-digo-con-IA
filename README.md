@@ -51,6 +51,9 @@ pip install -r requirements.txt
 # 3. Ejecutar la suite de pruebas (deben pasar TODAS)
 pytest
 
+# 3b. Suite adicional de caracterización y casos límite (fuera de tests/)
+pytest tests_caracterizacion
+
 # 4. Ejecutar el linter (al inicio reporta ~20 problemas; al final: 0)
 ruff check src
 

@@ -32,7 +32,7 @@ source .venv/bin/activate         # macOS / Linux / Git Bash
 pip install -r requirements.txt
 
 pytest -v                         # suite oficial: 20/20 SIEMPRE
-pytest Documentación/caracterizacion -v   # caracterización: 12/12 SIEMPRE
+pytest tests_caracterizacion -v   # caracterización + casos límite: 20/20 SIEMPRE
 ruff check src                    # meta final: 0 errores (línea base: 20)
 ruff check src --statistics       # conteo por regla
 cd src && python main.py          # app interactiva (ver advertencia Q-01)
@@ -42,11 +42,16 @@ python Documentación/documentacion.py   # visor HTML en vivo de la documentaci�
 Ejecuta las **tres** verificaciones (`pytest`, caracterización y `ruff check src`)
 **después de cada refactorización**, no solo al final.
 
-La suite de caracterización (`Documentación/caracterizacion/`) compara el
-comportamiento contra `snapshot_linea_base.json`, capturado antes de R1: ticket,
-reportes, menú, archivo JSON, mensajes de error y casos límite que `tests/` no
-cubre. **Nunca** regeneres el snapshot (`escenarios.py --actualizar`) para hacer
-pasar una prueba: si falla, el cambio alteró el comportamiento.
+La suite de caracterización (`tests_caracterizacion/`, fuera de `tests/` porque
+esa carpeta no se modifica) tiene dos partes:
+- `test_caracterizacion.py`: compara el comportamiento contra
+  `snapshot_linea_base.json`, capturado antes de R1 (ticket, reportes, menú,
+  archivo JSON, mensajes de error y casos límite que `tests/` no cubre).
+- `test_casos_limite.py`: casos descubiertos durante las fases (NaN, bytes no
+  UTF-8, inventario mal formado, cantidad `True`, `buscarProducto(None)`…).
+
+**Nunca** regeneres el snapshot (`escenarios.py --actualizar`) para hacer pasar
+una prueba: si falla, el cambio alteró el comportamiento.
 
 ## 3. Reglas inviolables
 
@@ -260,7 +265,7 @@ en el plan, `Documentación/02-plan-refactorizacion/`):
    riesgo. **Detenerse y esperar visto bueno.**
 2. **Refactor:** editar solo lo de esa fase (una refactorización por vez, sin
    mezclar). Código solo en `src/`.
-3. **Verify:** `pytest -v`, `pytest Documentación/caracterizacion -v` y
+3. **Verify:** `pytest -v`, `pytest tests_caracterizacion -v` y
    `ruff check src --statistics`. Revisar el diff contra §5 (auto-revisión).
 4. **Document:** ver §8.
 5. **Commit atómico** en la rama `refactorizacion`, en español
@@ -283,6 +288,7 @@ en el plan, `Documentación/02-plan-refactorizacion/`):
 ## 8. Documentación del proceso
 
 ```
+tests_caracterizacion/                # ENTREGABLE: golden master + casos límite
 docs/                                 # ENTREGABLES
 ├── bitacora.md                       # Una fila por refactorización + resumen de reflexión
 └── reflexion.md                      # Aprendizajes y conclusiones completas
@@ -294,7 +300,6 @@ Documentación/                        # DOCUMENTACIÓN LOCAL (en .gitignore, no
 ├── 00-investigacion/                 # Investigación + prompt + notas del usuario
 ├── 01-configuracion-entorno/         # Configuración + prompt + notas del usuario
 ├── 02-plan-refactorizacion/          # Plan, técnicas y prompts por fase
-├── caracterizacion/                  # Suite golden master (snapshot de línea base)
 ├── config.yaml                       # Stack tecnológico
 └── refactorizaciones/                # RXX-<slug>.md (+ .html generado)
 ```
@@ -316,7 +321,7 @@ Al terminar **cada** refactorización:
 3. Ejecutar `python Documentación/documentacion.py --generar`.
 4. Agregar la fila correspondiente en `docs/bitacora.md` (prompt, cambio,
    justificación, resultado de tests). En *Tests OK* usar el formato
-   `✅ 20/20 · caract. 12/12 · ruff N`; si hubo fallos, anotarlos también en la
+   `✅ 20/20 · caract. 20/20 · ruff N` (12/12 hasta R9); si hubo fallos, anotarlos también en la
    sección *Incidencias* de la bitácora. `docs/` sí va al PR: no enlazar rutas
    de `Documentación/` como si el revisor pudiera abrirlas.
 
@@ -348,3 +353,16 @@ nombres de archivo de la tabla del §7 del plan para que cada uno caiga en su pe
 - `Documentación/**/*.html` se generan: edita el `.md` correspondiente.
 - `src/datos_ejemplo.json`, si existe, es un archivo generado por ejecutar la
   app desde `src/` (Q-01); no es fuente de datos.
+
+## 10. Historial de este archivo
+
+`CLAUDE.md` se ajustó durante el reto conforme se detectaron necesidades:
+
+| Versión | Cambio | Motivo |
+|---|---|---|
+| 1 | Contexto, comandos, reglas, contrato, guía de estilo con ejemplos | Configuración inicial (antes de refactorizar) |
+| 2 | Protocolo ante fallos y flujo Analizar → Refactorizar → Verificar → Documentar | Evitar avanzar con pruebas en rojo |
+| 3 | Suite de caracterización obligatoria | La suite oficial no detectaba cambios sutiles (`$23.20`, VIP `>= 200`) |
+| 4 | Registro de correcciones y evidencias | Trazabilidad de lo que la persona corrigió a la IA |
+| 5 | `contador_ventas` en arquitectura y contrato | Renombrado en R7 |
+| 6 | Suite movida a `tests_caracterizacion/` + casos límite | Que la evidencia de pruebas viaje en el PR |

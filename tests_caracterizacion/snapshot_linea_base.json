@@ -1,0 +1,836 @@
+{
+  "ventas": [
+    {
+      "llamada": "registrar_venta('A2', 2, '')",
+      "retorno": {
+        "folio": 1,
+        "codigo": "A2",
+        "nombre": "Azúcar",
+        "cantidad": 2,
+        "subtotal": 20.0,
+        "descuento": 0,
+        "impuesto": 3.2,
+        "total": 23.2,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 1\nAzúcar x2\nSubtotal: $20.0\nIVA: $3.2\nTOTAL: $23.2\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 4, '')",
+      "retorno": {
+        "folio": 2,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 4,
+        "subtotal": 400.0,
+        "descuento": 0,
+        "impuesto": 64.0,
+        "total": 464.0,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 2\nCafé de grano x4\nSubtotal: $400.0\nIVA: $64.0\nTOTAL: $464.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 5, '')",
+      "retorno": {
+        "folio": 3,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 5,
+        "subtotal": 500.0,
+        "descuento": 25.0,
+        "impuesto": 76.0,
+        "total": 551.0,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 3\nCafé de grano x5\nSubtotal: $500.0\nDescuento: -$25.0\nIVA: $76.0\nTOTAL: $551.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 6, '')",
+      "retorno": {
+        "folio": 4,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 6,
+        "subtotal": 600.0,
+        "descuento": 30.0,
+        "impuesto": 91.2,
+        "total": 661.2,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 4\nCafé de grano x6\nSubtotal: $600.0\nDescuento: -$30.0\nIVA: $91.2\nTOTAL: $661.2\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 10, '')",
+      "retorno": {
+        "folio": 5,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 10,
+        "subtotal": 1000.0,
+        "descuento": 100.0,
+        "impuesto": 144.0,
+        "total": 1044.0,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 5\nCafé de grano x10\nSubtotal: $1000.0\nDescuento: -$100.0\nIVA: $144.0\nTOTAL: $1044.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 20, '')",
+      "retorno": {
+        "folio": 6,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 20,
+        "subtotal": 2000.0,
+        "descuento": 200.0,
+        "impuesto": 288.0,
+        "total": 2088.0,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 6\nCafé de grano x20\nSubtotal: $2000.0\nDescuento: -$200.0\nIVA: $288.0\nTOTAL: $2088.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 6, 'VIP007')",
+      "retorno": {
+        "folio": 7,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 6,
+        "subtotal": 600.0,
+        "descuento": 42.0,
+        "impuesto": 89.28,
+        "total": 647.28,
+        "cliente": "VIP007",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 7\nCafé de grano x6\nSubtotal: $600.0\nDescuento: -$42.0\nIVA: $89.28\nTOTAL: $647.28\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('C1', 4, 'VIP1')",
+      "retorno": {
+        "folio": 8,
+        "codigo": "C1",
+        "nombre": "Leche",
+        "cantidad": 4,
+        "subtotal": 200.0,
+        "descuento": 0,
+        "impuesto": 32.0,
+        "total": 232.0,
+        "cliente": "VIP1",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 8\nLeche x4\nSubtotal: $200.0\nIVA: $32.0\nTOTAL: $232.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('C1', 5, 'VIP1')",
+      "retorno": {
+        "folio": 9,
+        "codigo": "C1",
+        "nombre": "Leche",
+        "cantidad": 5,
+        "subtotal": 250.0,
+        "descuento": 5.0,
+        "impuesto": 39.2,
+        "total": 284.2,
+        "cliente": "VIP1",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 9\nLeche x5\nSubtotal: $250.0\nDescuento: -$5.0\nIVA: $39.2\nTOTAL: $284.2\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 20, 'VIP9')",
+      "retorno": {
+        "folio": 10,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 20,
+        "subtotal": 2000.0,
+        "descuento": 240.0,
+        "impuesto": 281.6,
+        "total": 2041.6,
+        "cliente": "VIP9",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 10\nCafé de grano x20\nSubtotal: $2000.0\nDescuento: -$240.0\nIVA: $281.6\nTOTAL: $2041.6\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 3, 'VI')",
+      "retorno": {
+        "folio": 11,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 3,
+        "subtotal": 300.0,
+        "descuento": 0,
+        "impuesto": 48.0,
+        "total": 348.0,
+        "cliente": "VI",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 11\nCafé de grano x3\nSubtotal: $300.0\nIVA: $48.0\nTOTAL: $348.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 3, 'vip007')",
+      "retorno": {
+        "folio": 12,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 3,
+        "subtotal": 300.0,
+        "descuento": 0,
+        "impuesto": 48.0,
+        "total": 348.0,
+        "cliente": "vip007",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 12\nCafé de grano x3\nSubtotal: $300.0\nIVA: $48.0\nTOTAL: $348.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 3, 'XVIP')",
+      "retorno": {
+        "folio": 13,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 3,
+        "subtotal": 300.0,
+        "descuento": 0,
+        "impuesto": 48.0,
+        "total": 348.0,
+        "cliente": "XVIP",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 13\nCafé de grano x3\nSubtotal: $300.0\nIVA: $48.0\nTOTAL: $348.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 1, None)",
+      "retorno": {
+        "folio": 14,
+        "codigo": "A1",
+        "nombre": "Café de grano",
+        "cantidad": 1,
+        "subtotal": 100.0,
+        "descuento": 0,
+        "impuesto": 16.0,
+        "total": 116.0,
+        "cliente": null,
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 14\nCafé de grano x1\nSubtotal: $100.0\nIVA: $16.0\nTOTAL: $116.0\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('B1', 7, '')",
+      "retorno": {
+        "folio": 15,
+        "codigo": "B1",
+        "nombre": "Chocolate",
+        "cantidad": 7,
+        "subtotal": 552.3,
+        "descuento": 27.62,
+        "impuesto": 83.95,
+        "total": 608.63,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 15\nChocolate x7\nSubtotal: $552.3\nDescuento: -$27.62\nIVA: $83.95\nTOTAL: $608.63\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('B2', 3, '')",
+      "retorno": {
+        "folio": 16,
+        "codigo": "B2",
+        "nombre": "Galletas",
+        "cantidad": 3,
+        "subtotal": 99.99,
+        "descuento": 0,
+        "impuesto": 16.0,
+        "total": 115.99,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 16\nGalletas x3\nSubtotal: $99.99\nIVA: $16.0\nTOTAL: $115.99\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('B2', 31, 'VIP2')",
+      "retorno": {
+        "folio": 17,
+        "codigo": "B2",
+        "nombre": "Galletas",
+        "cantidad": 31,
+        "subtotal": 1033.23,
+        "descuento": 123.99,
+        "impuesto": 145.48,
+        "total": 1054.72,
+        "cliente": "VIP2",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 17\nGalletas x31\nSubtotal: $1033.23\nDescuento: -$123.99\nIVA: $145.48\nTOTAL: $1054.72\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    }
+  ],
+  "errores": [
+    {
+      "llamada": "agregarProducto('', 'X', 1.0, 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "codigo vacio",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto(None, 'X', 1.0, 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "codigo vacio",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto('A1', 'X', 1.0, 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "el producto ya existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto('A2', 'X', 0, 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "precio invalido",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto('A2', 'X', -1.0, 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "precio invalido",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto('A2', 'X', 1.0, -1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "stock invalido",
+      "impreso": ""
+    },
+    {
+      "llamada": "agregarProducto('A3', 'Stock cero', 1.0, 0)",
+      "retorno": true,
+      "tipo": "bool",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('', 1)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "codigo vacio",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta(None, 1)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "codigo vacio",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('ZZ', 1)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('ZZ', 0)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 0)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "cantidad invalida",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', -2)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "cantidad invalida",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', None)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "cantidad invalida",
+      "impreso": ""
+    },
+    {
+      "llamada": "registrar_venta('A1', 6)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "stock insuficiente",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('', 1)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('ZZ', 0)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', 0)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "cantidad invalida",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', None)",
+      "retorno": null,
+      "tipo": "NoneType",
+      "ultimo_error": "cantidad invalida",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', 999)",
+      "retorno": 10429.56,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "eliminar_producto('ZZ',)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "actualizar_stock('ZZ', 1)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "producto no existe",
+      "impreso": ""
+    },
+    {
+      "llamada": "actualizar_stock('A1', -6)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "el stock no puede quedar negativo",
+      "impreso": ""
+    },
+    {
+      "llamada": "actualizar_stock('A1', -5)",
+      "retorno": true,
+      "tipo": "bool",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "eliminar_producto('A3',)",
+      "retorno": true,
+      "tipo": "bool",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "inventario_final": {
+        "A1": {
+          "codigo": "A1",
+          "nombre": "Café",
+          "precio": 10.0,
+          "stock": 0
+        }
+      },
+      "ventas": 0
+    }
+  ],
+  "cotizaciones": [
+    {
+      "llamada": "cotizar('A2', 2)",
+      "retorno": 23.2,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', 5)",
+      "retorno": 551.0,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', 6)",
+      "retorno": 661.2,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('A1', 10)",
+      "retorno": 1044.0,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('B1', 7)",
+      "retorno": 608.63,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "cotizar('B2', 31)",
+      "retorno": 1078.69,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    }
+  ],
+  "busqueda": [
+    {
+      "llamada": "buscarProducto('café',)",
+      "retorno": [
+        {
+          "codigo": "A1",
+          "nombre": "Café de grano",
+          "precio": 100.0,
+          "stock": 500
+        },
+        {
+          "codigo": "A9",
+          "nombre": "CAFÉ soluble",
+          "precio": 60.0,
+          "stock": 1
+        }
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "buscarProducto('LECHE',)",
+      "retorno": [
+        {
+          "codigo": "C1",
+          "nombre": "Leche",
+          "precio": 50.0,
+          "stock": 500
+        }
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "buscarProducto('zz',)",
+      "retorno": [],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    {
+      "llamada": "buscarProducto('',)",
+      "retorno": [
+        {
+          "codigo": "A1",
+          "nombre": "Café de grano",
+          "precio": 100.0,
+          "stock": 500
+        },
+        {
+          "codigo": "A2",
+          "nombre": "Azúcar",
+          "precio": 10.0,
+          "stock": 500
+        },
+        {
+          "codigo": "B1",
+          "nombre": "Chocolate",
+          "precio": 78.9,
+          "stock": 500
+        },
+        {
+          "codigo": "B2",
+          "nombre": "Galletas",
+          "precio": 33.33,
+          "stock": 500
+        },
+        {
+          "codigo": "C1",
+          "nombre": "Leche",
+          "precio": 50.0,
+          "stock": 500
+        },
+        {
+          "codigo": "A9",
+          "nombre": "CAFÉ soluble",
+          "precio": 60.0,
+          "stock": 1
+        }
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    }
+  ],
+  "reportes": {
+    "sin_ventas": {
+      "total_vendido": {
+        "llamada": "total_vendido()",
+        "retorno": 0,
+        "tipo": "int",
+        "ultimo_error": "",
+        "impreso": ""
+      },
+      "mas_vendidos": {
+        "llamada": "mas_vendidos()",
+        "retorno": [],
+        "tipo": "list",
+        "ultimo_error": "",
+        "impreso": ""
+      },
+      "resumen_ventas": {
+        "llamada": "resumen_ventas()",
+        "retorno": "===== RESUMEN DE VENTAS =====\nNumero de ventas: 0\nTotal del dia: $0\n",
+        "tipo": "str",
+        "ultimo_error": "",
+        "impreso": "===== RESUMEN DE VENTAS =====\nNumero de ventas: 0\nTotal del dia: $0\n\n"
+      }
+    },
+    "stock_bajo": {
+      "llamada": "productos_stock_bajo()",
+      "retorno": [
+        {
+          "codigo": "P2",
+          "nombre": "Dos",
+          "precio": 20.5,
+          "stock": 0
+        },
+        {
+          "codigo": "P4",
+          "nombre": "Cuatro",
+          "precio": 1.1,
+          "stock": 1
+        },
+        {
+          "codigo": "P5",
+          "nombre": "Cinco",
+          "precio": 7.0,
+          "stock": 0
+        }
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "reporte_inventario": {
+      "llamada": "reporte_inventario()",
+      "retorno": "===== INVENTARIO =====\nP1 | Uno | $10.0 | stock: 45\nP2 | Dos | $20.5 | stock: 0  <-- STOCK BAJO\nP3 | Tres | $33.33 | stock: 44\nP4 | Cuatro | $1.1 | stock: 1  <-- STOCK BAJO\nP5 | Cinco | $7.0 | stock: 0  <-- STOCK BAJO\nValor total del inventario: $1917.62\n",
+      "tipo": "str",
+      "ultimo_error": "",
+      "impreso": "===== INVENTARIO =====\nP1 | Uno | $10.0 | stock: 45\nP2 | Dos | $20.5 | stock: 0  <-- STOCK BAJO\nP3 | Tres | $33.33 | stock: 44\nP4 | Cuatro | $1.1 | stock: 1  <-- STOCK BAJO\nP5 | Cinco | $7.0 | stock: 0  <-- STOCK BAJO\nValor total del inventario: $1917.62\n\n"
+    },
+    "total_vendido": {
+      "llamada": "total_vendido()",
+      "retorno": 390.2,
+      "tipo": "float",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "mas_vendidos_default": {
+      "llamada": "mas_vendidos()",
+      "retorno": [
+        [
+          "P3",
+          6
+        ],
+        [
+          "P1",
+          5
+        ],
+        [
+          "P2",
+          4
+        ]
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "mas_vendidos_2": {
+      "llamada": "mas_vendidos(2,)",
+      "retorno": [
+        [
+          "P3",
+          6
+        ],
+        [
+          "P1",
+          5
+        ]
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "mas_vendidos_10": {
+      "llamada": "mas_vendidos(10,)",
+      "retorno": [
+        [
+          "P3",
+          6
+        ],
+        [
+          "P1",
+          5
+        ],
+        [
+          "P2",
+          4
+        ],
+        [
+          "P4",
+          4
+        ]
+      ],
+      "tipo": "list",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "resumen_ventas": {
+      "llamada": "resumen_ventas()",
+      "retorno": "===== RESUMEN DE VENTAS =====\nFolio 1: Uno x3 = $34.8\nFolio 2: Tres x5 = $193.31\nFolio 3: Dos x1 = $23.78\nFolio 4: Uno x2 = $23.2\nFolio 5: Cuatro x3 = $3.83\nFolio 6: Tres x1 = $38.66\nFolio 7: Cuatro x1 = $1.28\nFolio 8: Dos x3 = $71.34\nNumero de ventas: 8\nTotal del dia: $390.2\n",
+      "tipo": "str",
+      "ultimo_error": "",
+      "impreso": "===== RESUMEN DE VENTAS =====\nFolio 1: Uno x3 = $34.8\nFolio 2: Tres x5 = $193.31\nFolio 3: Dos x1 = $23.78\nFolio 4: Uno x2 = $23.2\nFolio 5: Cuatro x3 = $3.83\nFolio 6: Tres x1 = $38.66\nFolio 7: Cuatro x1 = $1.28\nFolio 8: Dos x3 = $71.34\nNumero de ventas: 8\nTotal del dia: $390.2\n\n"
+    }
+  },
+  "persistencia": {
+    "guardar": {
+      "llamada": "guardar_datos(datos.json)",
+      "retorno": true,
+      "tipo": "bool",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "archivo": "{\n  \"inventario\": {\n    \"A1\": {\n      \"codigo\": \"A1\",\n      \"nombre\": \"Café de grano\",\n      \"precio\": 100.0,\n      \"stock\": 494\n    },\n    \"A2\": {\n      \"codigo\": \"A2\",\n      \"nombre\": \"Azúcar\",\n      \"precio\": 10.0,\n      \"stock\": 500\n    },\n    \"B1\": {\n      \"codigo\": \"B1\",\n      \"nombre\": \"Chocolate\",\n      \"precio\": 78.9,\n      \"stock\": 493\n    },\n    \"B2\": {\n      \"codigo\": \"B2\",\n      \"nombre\": \"Galletas\",\n      \"precio\": 33.33,\n      \"stock\": 500\n    },\n    \"C1\": {\n      \"codigo\": \"C1\",\n      \"nombre\": \"Leche\",\n      \"precio\": 50.0,\n      \"stock\": 500\n    }\n  },\n  \"ventas\": [\n    {\n      \"folio\": 1,\n      \"codigo\": \"A1\",\n      \"nombre\": \"Café de grano\",\n      \"cantidad\": 6,\n      \"subtotal\": 600.0,\n      \"descuento\": 42.0,\n      \"impuesto\": 89.28,\n      \"total\": 647.28,\n      \"cliente\": \"VIP007\",\n      \"fecha\": \"<FECHA>\",\n      \"ticket\": \"TIENDA LA ESQUINA\\n----------------------------\\nFolio: 1\\nCafé de grano x6\\nSubtotal: $600.0\\nDescuento: -$42.0\\nIVA: $89.28\\nTOTAL: $647.28\\n\"\n    },\n    {\n      \"folio\": 2,\n      \"codigo\": \"B1\",\n      \"nombre\": \"Chocolate\",\n      \"cantidad\": 7,\n      \"subtotal\": 552.3,\n      \"descuento\": 27.62,\n      \"impuesto\": 83.95,\n      \"total\": 608.63,\n      \"cliente\": \"\",\n      \"fecha\": \"<FECHA>\",\n      \"ticket\": \"TIENDA LA ESQUINA\\n----------------------------\\nFolio: 2\\nChocolate x7\\nSubtotal: $552.3\\nDescuento: -$27.62\\nIVA: $83.95\\nTOTAL: $608.63\\n\"\n    }\n  ],\n  \"contador\": 2\n}",
+    "cargar": {
+      "llamada": "cargar_datos(datos.json)",
+      "retorno": true,
+      "tipo": "bool",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "venta_tras_recargar": {
+      "llamada": "registrar_venta('A2', 1)",
+      "retorno": {
+        "folio": 3,
+        "codigo": "A2",
+        "nombre": "Azúcar",
+        "cantidad": 1,
+        "subtotal": 10.0,
+        "descuento": 0,
+        "impuesto": 1.6,
+        "total": 11.6,
+        "cliente": "",
+        "fecha": "<FECHA>",
+        "ticket": "TIENDA LA ESQUINA\n----------------------------\nFolio: 3\nAzúcar x1\nSubtotal: $10.0\nIVA: $1.6\nTOTAL: $11.6\n"
+      },
+      "tipo": "dict",
+      "ultimo_error": "",
+      "impreso": ""
+    },
+    "cargar_corrupto": {
+      "llamada": "cargar_datos(corrupto.json)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "archivo corrupto",
+      "impreso": ""
+    },
+    "cargar_inexistente": {
+      "llamada": "cargar_datos(no.json)",
+      "retorno": false,
+      "tipo": "bool",
+      "ultimo_error": "el archivo no existe",
+      "impreso": ""
+    }
+  },
+  "menu_vacio": {
+    "consola": "Bienvenido al gestor de la tienda La Esquina\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 1\nCodigo: A1\nNombre: Café\nPrecio: abc\nEso no es un numero, intenta de nuevo.\nPrecio: 100\nStock inicial: 10\nProducto agregado.\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 1\nCodigo: A1\nNombre: Otro\nPrecio: 5\nStock inicial: 1\nError: el producto ya existe\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 1\nCodigo: L1\nNombre: Leche\nPrecio: 26\nStock inicial: 3\nProducto agregado.\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 2\nCodigo del producto: A1\nCantidad: 6\nCodigo de cliente (enter si no tiene): VIP007\nTIENDA LA ESQUINA\n----------------------------\nFolio: 1\nCafé x6\nSubtotal: $600.0\nDescuento: -$42.0\nIVA: $89.28\nTOTAL: $647.28\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 2\nCodigo del producto: A1\nCantidad: 2.9\nCodigo de cliente (enter si no tiene): \nTIENDA LA ESQUINA\n----------------------------\nFolio: 2\nCafé x2\nSubtotal: $200.0\nIVA: $32.0\nTOTAL: $232.0\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 2\nCodigo del producto: ZZ\nCantidad: 1\nCodigo de cliente (enter si no tiene): \nError: producto no existe\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 3\nCodigo del producto: A1\nCantidad: 6\nTotal estimado (con IVA): $661.2\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 3\nCodigo del producto: ZZ\nCantidad: 1\nError: producto no existe\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 4\n===== INVENTARIO =====\nA1 | Café | $100.0 | stock: 2  <-- STOCK BAJO\nL1 | Leche | $26.0 | stock: 3  <-- STOCK BAJO\nValor total del inventario: $278.0\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 5\n===== RESUMEN DE VENTAS =====\nFolio 1: Café x6 = $647.28\nFolio 2: Café x2 = $232.0\nNumero de ventas: 2\nTotal del dia: $879.28\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 6\nA1 -> 8 unidades\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 7\nOJO: Café solo tiene 2 unidades\nOJO: Leche solo tiene 3 unidades\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 9\nOpcion no valida.\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: \nOpcion no valida.\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 8\nDatos guardados. Hasta luego.\n",
+    "archivo_guardado": "{\n  \"inventario\": {\n    \"A1\": {\n      \"codigo\": \"A1\",\n      \"nombre\": \"Café\",\n      \"precio\": 100.0,\n      \"stock\": 2\n    },\n    \"L1\": {\n      \"codigo\": \"L1\",\n      \"nombre\": \"Leche\",\n      \"precio\": 26.0,\n      \"stock\": 3\n    }\n  },\n  \"ventas\": [\n    {\n      \"folio\": 1,\n      \"codigo\": \"A1\",\n      \"nombre\": \"Café\",\n      \"cantidad\": 6,\n      \"subtotal\": 600.0,\n      \"descuento\": 42.0,\n      \"impuesto\": 89.28,\n      \"total\": 647.28,\n      \"cliente\": \"VIP007\",\n      \"fecha\": \"<FECHA>\",\n      \"ticket\": \"TIENDA LA ESQUINA\\n----------------------------\\nFolio: 1\\nCafé x6\\nSubtotal: $600.0\\nDescuento: -$42.0\\nIVA: $89.28\\nTOTAL: $647.28\\n\"\n    },\n    {\n      \"folio\": 2,\n      \"codigo\": \"A1\",\n      \"nombre\": \"Café\",\n      \"cantidad\": 2,\n      \"subtotal\": 200.0,\n      \"descuento\": 0,\n      \"impuesto\": 32.0,\n      \"total\": 232.0,\n      \"cliente\": \"\",\n      \"fecha\": \"<FECHA>\",\n      \"ticket\": \"TIENDA LA ESQUINA\\n----------------------------\\nFolio: 2\\nCafé x2\\nSubtotal: $200.0\\nIVA: $32.0\\nTOTAL: $232.0\\n\"\n    }\n  ],\n  \"contador\": 2\n}"
+  },
+  "menu_con_datos": {
+    "consola": "Bienvenido al gestor de la tienda La Esquina\nDatos cargados de datos_ejemplo.json\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 7\nOJO: Leche entera 1L solo tiene 3 unidades\nOJO: Chocolate en polvo 400g solo tiene 2 unidades\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 4\n===== INVENTARIO =====\nA001 | Café de grano 500g | $185.0 | stock: 12\nA002 | Azúcar 1kg | $32.5 | stock: 40\nA003 | Leche entera 1L | $26.0 | stock: 3  <-- STOCK BAJO\nB001 | Galletas de avena | $45.0 | stock: 18\nB002 | Chocolate en polvo 400g | $78.9 | stock: 2  <-- STOCK BAJO\nC001 | Jabón de tocador | $21.0 | stock: 25\nValor total del inventario: $5090.8\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 6\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 2\nCodigo del producto: B002\nCantidad: 2\nCodigo de cliente (enter si no tiene): \nTIENDA LA ESQUINA\n----------------------------\nFolio: 1\nChocolate en polvo 400g x2\nSubtotal: $157.8\nIVA: $25.25\nTOTAL: $183.05\n\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 7\nOJO: Leche entera 1L solo tiene 3 unidades\nOJO: Chocolate en polvo 400g solo tiene 0 unidades\n\n1) Agregar producto\n2) Registrar venta\n3) Cotizar\n4) Reporte de inventario\n5) Resumen de ventas\n6) Mas vendidos\n7) Alertas de stock bajo\n8) Guardar y salir\nOpcion: 8\nDatos guardados. Hasta luego.\n",
+    "archivo_guardado": "{\n  \"inventario\": {\n    \"A001\": {\n      \"codigo\": \"A001\",\n      \"nombre\": \"Café de grano 500g\",\n      \"precio\": 185.0,\n      \"stock\": 12\n    },\n    \"A002\": {\n      \"codigo\": \"A002\",\n      \"nombre\": \"Azúcar 1kg\",\n      \"precio\": 32.5,\n      \"stock\": 40\n    },\n    \"A003\": {\n      \"codigo\": \"A003\",\n      \"nombre\": \"Leche entera 1L\",\n      \"precio\": 26.0,\n      \"stock\": 3\n    },\n    \"B001\": {\n      \"codigo\": \"B001\",\n      \"nombre\": \"Galletas de avena\",\n      \"precio\": 45.0,\n      \"stock\": 18\n    },\n    \"B002\": {\n      \"codigo\": \"B002\",\n      \"nombre\": \"Chocolate en polvo 400g\",\n      \"precio\": 78.9,\n      \"stock\": 0\n    },\n    \"C001\": {\n      \"codigo\": \"C001\",\n      \"nombre\": \"Jabón de tocador\",\n      \"precio\": 21.0,\n      \"stock\": 25\n    }\n  },\n  \"ventas\": [\n    {\n      \"folio\": 1,\n      \"codigo\": \"B002\",\n      \"nombre\": \"Chocolate en polvo 400g\",\n      \"cantidad\": 2,\n      \"subtotal\": 157.8,\n      \"descuento\": 0,\n      \"impuesto\": 25.25,\n      \"total\": 183.05,\n      \"cliente\": \"\",\n      \"fecha\": \"<FECHA>\",\n      \"ticket\": \"TIENDA LA ESQUINA\\n----------------------------\\nFolio: 1\\nChocolate en polvo 400g x2\\nSubtotal: $157.8\\nIVA: $25.25\\nTOTAL: $183.05\\n\"\n    }\n  ],\n  \"contador\": 1\n}"
+  }
+}
