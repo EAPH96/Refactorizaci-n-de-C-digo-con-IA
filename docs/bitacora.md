@@ -41,7 +41,7 @@ Después de cada cambio ejecuta `pytest` y anota el resultado.
 
 | #  | Prompt usado | Cambio realizado | Justificación | Tests OK |
 |----|--------------|------------------|---------------|----------|
-| 1  |              |                  |               |          |
+| 1  | "Comencemos con la refactorización, empieza con R1; cuando acabes corre los tests y muéstralos todos, cuáles pasaron y cuáles no [...]" + aprobación del alcance tras el análisis ("apruebo el alcance") | **Eliminar código muerto.** Se borraron `calcular_descuento_viejo()` y el bloque comentado `exportar_txt` (gestor), `MODO_DEBUG` (gestor), `reporteViejoCSV()` y `import os` (reportes) y las cabeceras `# -*- coding: utf-8 -*-` de los 4 módulos. 35 líneas eliminadas, 0 agregadas. | Nada de eso se ejecutaba ni tenía referencias (verificado con búsqueda en `src/` y `tests/`); solo confundía y había que mantenerlo. Git conserva la historia, así que el "por si acaso" sobra. Quita 7 de los 20 errores del linter sin tocar lógica. | ✅ 20/20 · caract. 12/12 · ruff 13 |
 | 2  |              |                  |               |          |
 | 3  |              |                  |               |          |
 | 4  |              |                  |               |          |

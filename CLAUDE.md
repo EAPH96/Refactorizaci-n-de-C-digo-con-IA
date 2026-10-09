@@ -328,6 +328,14 @@ archivos, verificación), `#### Instrucción del usuario` (texto tal cual),
 `#### Qué se cambió` y `#### Notas del usuario` vacía. Agrega además una fila en
 *Correcciones a la IA* de `docs/bitacora.md`. Detalle en §5.5 del plan.
 
+### Evidencias
+
+Cada documento de fase tiene una sección `## Evidencias` con capturas o
+adjuntos que la persona sube desde el visor (panel *📎 Agregar evidencia*).
+Los archivos viven en `Documentación/evidencias/<documento>/`. **No edites ni
+borres** las entradas de esa sección; al crear un `RXX-*.md` desde la
+plantilla, conserva la sección vacía.
+
 Los documentos `RXX-*.md` se muestran como **pestañas** en
 `Documentación/02-plan-refactorizacion/plan-refactorizacion.html`; respeta los
 nombres de archivo de la tabla del §7 del plan para que cada uno caiga en su pestaña.

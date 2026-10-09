@@ -29,6 +29,9 @@ src/datos_ejemplo.json
 # --- Vistas HTML generadas desde Markdown (la fuente es el .md hermano)
 Documentación/**/*.html
 
+# --- Evidencias (capturas/PDF) que sube la persona: binarios, no se leen
+Documentación/evidencias/
+
 # --- Basura del sistema operativo y configuración local de editores
 .DS_Store
 Thumbs.db
