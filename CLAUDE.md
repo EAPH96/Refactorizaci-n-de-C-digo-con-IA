@@ -78,7 +78,7 @@ main.py ──► gestor.py ◄── almacen.py      (almacen LEE y ESCRIBE el 
 
 | Módulo | Responsabilidad | Estado global que toca |
 |---|---|---|
-| `gestor.py` | Productos, ventas, cotización; dueño del estado | `INVENTARIO`, `VENTAS`, `contadorVentas`, `ultimo_error` |
+| `gestor.py` | Productos, ventas, cotización; dueño del estado | `INVENTARIO`, `VENTAS`, `contador_ventas`, `ultimo_error` |
 | `almacen.py` | Persistencia JSON | Lee y escribe todo lo anterior |
 | `reportes.py` | Stock bajo, inventario, totales, más vendidos | Lee `INVENTARIO`, `VENTAS` |
 | `main.py` | Menú de consola (`input`/`print`) | Lee `ultimo_error` |
@@ -98,7 +98,9 @@ Los errores se comunican regresando `False`/`None` y dejando el motivo en
 - `INVENTARIO` (dict) y `VENTAS` (list) se mutan **en sitio** (`clear()`,
   `[k] = v`, `append`). Nunca reasignarlos (`INVENTARIO = {}` rompe a quien
   conserve una referencia).
-- Si se renombra `contadorVentas`, actualizar también `almacen.py`.
+- `gestor.contador_ventas` (antes `contadorVentas`, renombrado en R7) lo leen y
+  escriben `gestor.py` y `almacen.py`; si se renombra, actualizar ambos. En el
+  JSON se guarda con la clave `"contador"`, que no cambia.
 
 **Valores de retorno**
 - `agregarProducto`, `eliminar_producto`, `actualizar_stock`, `guardar_datos`,

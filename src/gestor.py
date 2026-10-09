@@ -26,7 +26,7 @@ SEPARADOR_TICKET = "-" * 28
 # ---------------------------------------------------------------
 INVENTARIO = {}
 VENTAS = []
-contadorVentas = 0
+contador_ventas = 0
 ultimo_error = ""
 
 
@@ -54,10 +54,10 @@ def calcular_impuesto(base):
 
 def reiniciar_sistema():
     """Borra todo el estado del sistema (inventario, ventas y folios)."""
-    global contadorVentas, ultimo_error
+    global contador_ventas, ultimo_error
     INVENTARIO.clear()
     VENTAS.clear()
-    contadorVentas = 0
+    contador_ventas = 0
     ultimo_error = ""
 
 
@@ -101,21 +101,21 @@ def actualizar_stock(codigo, cantidad):
     if codigo not in INVENTARIO:
         ultimo_error = "producto no existe"
         return False
-    aux = INVENTARIO[codigo]["stock"] + cantidad
-    if aux < 0:
+    stock_nuevo = INVENTARIO[codigo]["stock"] + cantidad
+    if stock_nuevo < 0:
         ultimo_error = "el stock no puede quedar negativo"
         return False
-    INVENTARIO[codigo]["stock"] = aux
+    INVENTARIO[codigo]["stock"] = stock_nuevo
     return True
 
 
 def buscarProducto(texto):
     # busca productos cuyo nombre contenga el texto (sin importar mayusculas)
-    temp2 = []
-    for k in INVENTARIO:
-        if texto.lower() in INVENTARIO[k]["nombre"].lower():
-            temp2.append(INVENTARIO[k])
-    return temp2
+    coincidencias = []
+    for codigo in INVENTARIO:
+        if texto.lower() in INVENTARIO[codigo]["nombre"].lower():
+            coincidencias.append(INVENTARIO[codigo])
+    return coincidencias
 
 
 def _validar_venta(codigo, cantidad):
@@ -166,30 +166,30 @@ def registrar_venta(codigo, cantidad, cliente=""):
 
     Si algo falla regresa None y deja el motivo en ultimo_error.
     """
-    global contadorVentas
+    global contador_ventas
     if not _validar_venta(codigo, cantidad):
         return None
-    temp2 = INVENTARIO[codigo]
-    aux = temp2["precio"] * cantidad
-    desc = calcular_descuento(aux, cliente)
-    base = aux - desc
+    producto = INVENTARIO[codigo]
+    subtotal = producto["precio"] * cantidad
+    descuento = calcular_descuento(subtotal, cliente)
+    base = subtotal - descuento
     impuesto = calcular_impuesto(base)
     total = round(base + impuesto, 2)
-    temp2["stock"] = temp2["stock"] - cantidad
-    contadorVentas = contadorVentas + 1
+    producto["stock"] = producto["stock"] - cantidad
+    contador_ventas = contador_ventas + 1
     venta = {
-        "folio": contadorVentas,
+        "folio": contador_ventas,
         "codigo": codigo,
-        "nombre": temp2["nombre"],
+        "nombre": producto["nombre"],
         "cantidad": cantidad,
-        "subtotal": round(aux, 2),
-        "descuento": round(desc, 2),
+        "subtotal": round(subtotal, 2),
+        "descuento": round(descuento, 2),
         "impuesto": round(impuesto, 2),
         "total": total,
         "cliente": cliente,
         "fecha": datetime.now().strftime(FORMATO_FECHA),
     }
-    venta["ticket"] = _generar_ticket(venta, desc)
+    venta["ticket"] = _generar_ticket(venta, descuento)
     VENTAS.append(venta)
     return venta
 
@@ -203,9 +203,9 @@ def cotizar(codigo, cantidad):
     if cantidad is None or cantidad <= 0:
         ultimo_error = "cantidad invalida"
         return None
-    aux = INVENTARIO[codigo]["precio"] * cantidad
+    subtotal = INVENTARIO[codigo]["precio"] * cantidad
     # la cotizacion no recibe cliente: nunca aplica el extra VIP
-    desc = calcular_descuento(aux)
-    base = aux - desc
+    descuento = calcular_descuento(subtotal)
+    base = subtotal - descuento
     total = base + calcular_impuesto(base)
     return round(total, 2)
