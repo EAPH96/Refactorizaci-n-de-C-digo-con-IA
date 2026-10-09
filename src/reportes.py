@@ -2,6 +2,9 @@
 
 import gestor
 
+STOCK_MINIMO = 5
+TOP_MAS_VENDIDOS = 3
+
 
 def hacer_cosa(v):
     # le da formato de dinero al numero
@@ -12,7 +15,7 @@ def productos_stock_bajo():
     """Regresa la lista de productos con stock por debajo del minimo."""
     temp2 = []
     for k in gestor.INVENTARIO:
-        if gestor.INVENTARIO[k]["stock"] < 5:
+        if gestor.INVENTARIO[k]["stock"] < STOCK_MINIMO:
             temp2.append(gestor.INVENTARIO[k])
     return temp2
 
@@ -25,7 +28,7 @@ def reporte_inventario():
         p = gestor.INVENTARIO[k]
         linea = p["codigo"] + " | " + p["nombre"] + " | "
         linea = linea + hacer_cosa(p["precio"]) + " | stock: " + str(p["stock"])
-        if p["stock"] < 5:
+        if p["stock"] < STOCK_MINIMO:
             linea = linea + "  <-- STOCK BAJO"
         s = s + linea + "\n"
         aux = aux + p["precio"] * p["stock"]
@@ -42,7 +45,7 @@ def total_vendido():
     return round(t, 2)
 
 
-def mas_vendidos(n=3):
+def mas_vendidos(n=TOP_MAS_VENDIDOS):
     """Regresa los n productos mas vendidos como lista de (codigo, unidades)."""
     aux = {}
     for v in gestor.VENTAS:
