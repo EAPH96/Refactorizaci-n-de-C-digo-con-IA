@@ -111,11 +111,12 @@ def actualizar_stock(codigo, cantidad):
 
 def buscarProducto(texto):
     # busca productos cuyo nombre contenga el texto (sin importar mayusculas)
-    coincidencias = []
-    for codigo in INVENTARIO:
-        if texto.lower() in INVENTARIO[codigo]["nombre"].lower():
-            coincidencias.append(INVENTARIO[codigo])
-    return coincidencias
+    # texto.lower() se evalua dentro de la comprension (no antes): con el
+    # inventario vacio, buscarProducto(None) regresa [] en lugar de fallar
+    return [
+        producto for producto in INVENTARIO.values()
+        if texto.lower() in producto["nombre"].lower()
+    ]
 
 
 def _validar_venta(codigo, cantidad):
