@@ -1,10 +1,14 @@
-# Entornos virtuales
+# Razón de bloqueo: Entornos virtuales
+# Por qué: dependen del sistema operativo de cada máquina y se recrean con
+# `pip install -r requirements.txt`; versionarlos agrega miles de archivos.
 .venv/
 venv/
 env/
 ENV/
 
-# Bytecode y cachés de herramientas
+# Razón de bloqueo: Bytecode y cachés de herramientas
+# Por qué: Python, pytest, ruff y coverage los regeneran solos en cada ejecución;
+# solo ensucian el diff y pueden causar conflictos entre máquinas.
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -14,28 +18,40 @@ __pycache__/
 .coverage.*
 htmlcov/
 
-# Datos generados al ejecutar la app desde src/ (ver Q-01 en la investigación)
+# Razón de bloqueo: Datos generados al ejecutar la app desde src/ (ver Q-01 en la investigación)
+# Por qué: la app los crea al usarla; versionarlos mezclaría datos de prueba
+# locales con el código y cambiarían en cada ejecución.
 src/datos_ejemplo.json
 *.log
 
-# Documentación de trabajo local: investigación, plan, prompts, caracterización,
+# Razón de bloqueo: Documentación de trabajo local: investigación, plan, prompts, caracterización,
 # visor HTML y config.yaml. No forma parte del entregable del PR. Esto es para tener la trazabilidad de las ejecuciones de promtps.
+# Por qué: el PR debe ceñirse a la estructura esperada del reto; lo que sí se
+# entrega del proceso está resumido en docs/bitacora.md y docs/reflexion.md.
 Documentación/
 
-# Documentos del curso (formato de entrega, plan y rúbrica): referencia local
+# Razón de bloqueo: Documentos del curso (formato de entrega, plan y rúbrica): referencia local
+# Por qué: son material del curso, no código del proyecto, y se entregan por
+# separado; además son binarios que git no puede comparar.
 *.docx
 
-# Configuración local de Claude Code (permisos de esta máquina)
+# Razón de bloqueo: Configuración local de Claude Code (permisos de esta máquina)
+# Por qué: los permisos y rutas son personales de cada máquina; las
+# instrucciones compartidas del proyecto ya viven en CLAUDE.md y .claudeignore.
 .claude/
 
-# Sistema operativo y editores
+# Razón de bloqueo: Sistema operativo y editores
+# Por qué: los crea el sistema o el editor de cada persona y no tienen
+# relación con el proyecto.
 .DS_Store
 Thumbs.db
 desktop.ini
 .idea/
 .vscode/
 
-# Empaquetado
+# Razón de bloqueo: Empaquetado
+# Por qué: son artefactos de construcción que se generan desde el código;
+# el proyecto no se distribuye como paquete.
 build/
 dist/
 *.egg-info/

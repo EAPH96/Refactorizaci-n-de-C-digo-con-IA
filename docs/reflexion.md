@@ -39,6 +39,10 @@ Mucho, que puede oprimizarse este proceso que puede llegar a ser repetitivo dent
 
 Me encantó el reto, aprendí muchas conceptos nuevos y el poder ir documentando todo para tener la trazabilidad de cambios dentro de un código. Algo que no sabía era del archivo de ".claudeignore", no sabía que existía algo así dentro de la sintaxis de Claude, lo que normalmente hago es poner las reglas y especificaciones dentro de settings.json en ".claude" para denegar los permisos de acceso, esto es 100% nuevo para mi.
 
+Algo que me gustó mucho dentro del desarrollo fue la alta velocidad al encontrar las áreas de opordunidad para realizar una refactorización, en poco tiempo y con el conocimiento de los tipos de refactorizaciones compartido a la IA pude ver muchas opciones, es por ello que se realizaron 10, se revisaron y me convenció en realizarlas. 
+
+También, algo que me ayudó mucho es que le ponía la instrucción que se revisaran todas las pruebas de pytest y de ruff cada que se terminara una refactorización, y al finalizar si había algún error en estas, que se analizara, se preguntara el por qué sucedió esto y que lo resolviera, teniendo dentro de la bitácora las ejecuciones y qué se realizó dentro de cada punto, a su vez documentaba de forma automática, igual se iba revisando y una vez que se terminara su revisión de pruebas y ruff, realizaba las pruebas manual es de la funcionalidad del sistema, tomando captura y almacenándola dentro de una bitácora personal para observar que tiene bien el funcionamiento y los tests pasaban.
+
 ## Notas del usuario
 
 Todo perfecto, he aprendido muchísimo de esta actividad, espero poder realizar este tipo de actividades más seguido por mí mismo, para seguir aprendiendo y mejorando mi código, y también mi conocimiento del uso de la IA.

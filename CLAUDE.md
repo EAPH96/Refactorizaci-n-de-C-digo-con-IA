@@ -36,7 +36,8 @@ pytest Documentación/tests_caracterizacion -v   # caracterización + casos lím
 ruff check src                    # meta final: 0 errores (línea base: 20)
 ruff check src --statistics       # conteo por regla
 cd src && python main.py          # app interactiva (ver advertencia Q-01)
-python Documentación/documentacion.py   # visor HTML en vivo de la documentación
+python Documentación/mini-servicio/documentacion.py              # visor HTML en vivo
+python Documentación/mini-servicio/documentacion.py --exportar   # un solo HTML portable
 ```
 
 Ejecuta las **tres** verificaciones (`pytest`, caracterización y `ruff check src`)
@@ -292,7 +293,9 @@ docs/                                 # ENTREGABLES
 ├── bitacora.md                       # Una fila por refactorización + resumen de reflexión
 └── reflexion.md                      # Aprendizajes y conclusiones completas
 Documentación/                        # DOCUMENTACIÓN LOCAL (en .gitignore, no va al PR)
-├── documentacion.py                  # Visor HTML en vivo (stdlib). El .md es la fuente.
+├── mini-servicio/                    # Visor portable: documentacion.py, configuracion.json,
+│                                     #   vendor/marked.min.js y LEEME.md
+├── exportaciones/                    # (generado) HTML único de solo lectura
 ├── index.html                        # (generado) índice
 ├── bitacora.html, reflexion.html     # (generados) vistas de docs/*.md
 ├── plantillas/refactorizacion.md     # Plantilla para cada refactorización
@@ -304,8 +307,8 @@ Documentación/                        # DOCUMENTACIÓN LOCAL (en .gitignore, no
 └── refactorizaciones/                # RXX-<slug>.md (+ .html generado)
 ```
 
-- Los `.html` **leen su `.md` al abrirse** (servidos por `documentacion.py`
-  en `http://127.0.0.1`) y se actualizan solos al guardar el `.md`. Abiertos
+- Los `.html` **leen su `.md` al abrirse** (servidos por
+  `mini-servicio/documentacion.py` en `http://127.0.0.1`) y se actualizan solos al guardar el `.md`. Abiertos
   como `file://` muestran la última instantánea incrustada.
 - Nunca editar un `.html` a mano.
 
@@ -318,7 +321,7 @@ Al terminar **cada** refactorización:
 2. **No tocar** las secciones `## Notas del usuario`: las llena la persona a
    mano. Si se edita un `.md` que ya tiene notas, conservarlas íntegras.
    Tampoco las `#### Notas del usuario` dentro de cada corrección.
-3. Ejecutar `python Documentación/documentacion.py --generar`.
+3. Ejecutar `python Documentación/mini-servicio/documentacion.py --generar`.
 4. Agregar la fila correspondiente en `docs/bitacora.md` (prompt, cambio,
    justificación, resultado de tests). En *Tests OK* usar el formato
    `✅ 20/20 · caract. 20/20 · ruff N` (12/12 hasta R9); si hubo fallos, anotarlos también en la
@@ -367,3 +370,4 @@ nombres de archivo de la tabla del §7 del plan para que cada uno caiga en su pe
 | 5 | `contador_ventas` en arquitectura y contrato | Renombrado en R7 |
 | 6 | Suite movida a `tests_caracterizacion/` + casos límite | Que la evidencia de pruebas viaje en el PR |
 | 7 | Suite regresada a `Documentación/tests_caracterizacion/` | Ajustar el PR a la estructura esperada del reto |
+| 8 | Visor movido a `Documentación/mini-servicio/` + exportación | Visor portable y documentación en un solo HTML |

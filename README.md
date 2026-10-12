@@ -32,6 +32,7 @@ Code como asistente.
 
 ## Instalación y ejecución
 
+### Requisitos previos
 Requiere Python 3.10 o superior y Git. Las dependencias de `requirements.txt`
 son solo de desarrollo: `pytest` (pruebas) y `ruff` (linter); la aplicación
 no usa librerías externas.
@@ -48,14 +49,20 @@ source .venv/bin/activate        # En Windows: .venv\Scripts\activate
 # 2. Instalar dependencias
 pip install -r requirements.txt
 
-# 3. Ejecutar la suite de pruebas (deben pasar TODAS)
+# 3. Opcional: Probar la aplicación interactiva
+cd src && python main.py
+
+#------------------------------
+#       Comandos extras       
+#------------------------------
+
+# - Ejecutar la suite de pruebas (deben pasar TODAS)
 pytest
 
-# 4. Ejecutar el linter (al inicio reporta ~20 problemas; al final: 0)
+# - Ejecutar el linter (al inicio reporta ~20 problemas; al final: 0)
 ruff check src
 
-# 5. (Opcional) Probar la aplicación interactiva
-cd src && python main.py
+
 ```
 
 ## Instrucciones del reto

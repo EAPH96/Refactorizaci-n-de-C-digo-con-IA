@@ -32,6 +32,9 @@ Documentación/**/*.html
 # --- Evidencias (capturas/PDF) que sube la persona: binarios, no se leen
 Documentación/evidencias/
 
+# --- Biblioteca de terceros minificada del visor (marked.js): no se edita
+Documentación/mini-servicio/vendor/
+
 # --- Basura del sistema operativo y configuración local de editores
 .DS_Store
 Thumbs.db
