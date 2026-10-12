@@ -32,7 +32,7 @@ source .venv/bin/activate         # macOS / Linux / Git Bash
 pip install -r requirements.txt
 
 pytest -v                         # suite oficial: 20/20 SIEMPRE
-pytest tests_caracterizacion -v   # caracterización + casos límite: 20/20 SIEMPRE
+pytest Documentación/tests_caracterizacion -v   # caracterización + casos límite: 20/20 SIEMPRE
 ruff check src                    # meta final: 0 errores (línea base: 20)
 ruff check src --statistics       # conteo por regla
 cd src && python main.py          # app interactiva (ver advertencia Q-01)
@@ -42,8 +42,8 @@ python Documentación/documentacion.py   # visor HTML en vivo de la documentaci�
 Ejecuta las **tres** verificaciones (`pytest`, caracterización y `ruff check src`)
 **después de cada refactorización**, no solo al final.
 
-La suite de caracterización (`tests_caracterizacion/`, fuera de `tests/` porque
-esa carpeta no se modifica) tiene dos partes:
+La suite de caracterización (`Documentación/tests_caracterizacion/`, fuera de
+`tests/` porque esa carpeta no se modifica; es local y no va al PR) tiene dos partes:
 - `test_caracterizacion.py`: compara el comportamiento contra
   `snapshot_linea_base.json`, capturado antes de R1 (ticket, reportes, menú,
   archivo JSON, mensajes de error y casos límite que `tests/` no cubre).
@@ -265,7 +265,7 @@ en el plan, `Documentación/02-plan-refactorizacion/`):
    riesgo. **Detenerse y esperar visto bueno.**
 2. **Refactor:** editar solo lo de esa fase (una refactorización por vez, sin
    mezclar). Código solo en `src/`.
-3. **Verify:** `pytest -v`, `pytest tests_caracterizacion -v` y
+3. **Verify:** `pytest -v`, `pytest Documentación/tests_caracterizacion -v` y
    `ruff check src --statistics`. Revisar el diff contra §5 (auto-revisión).
 4. **Document:** ver §8.
 5. **Commit atómico** en la rama `refactorizacion`, en español
@@ -288,7 +288,6 @@ en el plan, `Documentación/02-plan-refactorizacion/`):
 ## 8. Documentación del proceso
 
 ```
-tests_caracterizacion/                # ENTREGABLE: golden master + casos límite
 docs/                                 # ENTREGABLES
 ├── bitacora.md                       # Una fila por refactorización + resumen de reflexión
 └── reflexion.md                      # Aprendizajes y conclusiones completas
@@ -301,6 +300,7 @@ Documentación/                        # DOCUMENTACIÓN LOCAL (en .gitignore, no
 ├── 01-configuracion-entorno/         # Configuración + prompt + notas del usuario
 ├── 02-plan-refactorizacion/          # Plan, técnicas y prompts por fase
 ├── config.yaml                       # Stack tecnológico
+├── tests_caracterizacion/            # Golden master + casos límite (local)
 └── refactorizaciones/                # RXX-<slug>.md (+ .html generado)
 ```
 
@@ -366,3 +366,4 @@ nombres de archivo de la tabla del §7 del plan para que cada uno caiga en su pe
 | 4 | Registro de correcciones y evidencias | Trazabilidad de lo que la persona corrigió a la IA |
 | 5 | `contador_ventas` en arquitectura y contrato | Renombrado en R7 |
 | 6 | Suite movida a `tests_caracterizacion/` + casos límite | Que la evidencia de pruebas viaje en el PR |
+| 7 | Suite regresada a `Documentación/tests_caracterizacion/` | Ajustar el PR a la estructura esperada del reto |

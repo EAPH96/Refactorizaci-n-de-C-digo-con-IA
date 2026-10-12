@@ -14,8 +14,8 @@ Después de cada cambio ejecuta `pytest` y anota el resultado.
 > las tres estén en verde:
 >
 > 1. `pytest -v` — suite oficial de caja negra (20 pruebas, no se modifica).
-> 2. Suite de **caracterización** en `tests_caracterizacion/` (fuera de `tests/`,
->    que no se modifica): 12 pruebas *golden master* creadas antes de
+> 2. Suite local de **caracterización** (fuera de `tests/`, que no se modifica,
+>    y fuera del entregable): 12 pruebas *golden master* creadas antes de
 >    refactorizar, que comparan ticket, reportes, menú, archivo JSON y mensajes
 >    de error contra el comportamiento original, más 8 casos límite
 >    descubiertos durante las fases (20 en total desde R10).
@@ -79,7 +79,7 @@ refactorización para modificar lo que propuso o hizo la IA.
 
 ## Pruebas adicionales para casos límite
 
-Además de la suite *golden master*, `tests_caracterizacion/test_casos_limite.py`
+Además de la suite *golden master*, la suite local de casos límite
 tiene 8 pruebas de comportamientos descubiertos durante las fases, que ninguna suite cubría:
 
 | Fase | Caso | Comportamiento que se conserva |
@@ -126,7 +126,7 @@ tests/test_almacen.py::test_guardar_y_cargar_conserva_los_datos PASSED
 tests/test_reportes.py::test_reporte_inventario_marca_stock_bajo PASSED
 ============================== 20 passed ==============================
 
-$ pytest tests_caracterizacion -v
+$ pytest Documentación/tests_caracterizacion -v   # suite local
 test_caracterizacion.py::test_escenario_identico_a_linea_base[ventas] PASSED
 ...
 test_casos_limite.py::TestR9Reportes::test_reporte_con_codigo_no_textual_falla_igual_que_antes PASSED

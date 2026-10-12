@@ -31,13 +31,13 @@ Mucho, que puede oprimizarse este proceso que puede llegar a ser repetitivo dent
 | `ruff check src` | 20 errores | 0 errores |
 | Refactorizaciones aplicadas | 0 | 10 |
 | Complejidad máx. (`registrar_venta` / `menu`) | 12 / 17 | 2 / 4 |
-| Pruebas adicionales (`tests_caracterizacion/`) | 0 | 20 passed |
+| Pruebas adicionales (suite local de caracterización) | 0 | 20 passed |
 | Funciones con type hints | 0 de 20 | 31 de 31 |
 | Funciones sin docstring | 8 de 20 | 0 de 31 |
 
 ## Conclusiones
 
-Me encantó el reto, aprendí muchas conceptos nuevos y el poder ir documentando todo para tener la trazabilidad de cambios dentro de un código.
+Me encantó el reto, aprendí muchas conceptos nuevos y el poder ir documentando todo para tener la trazabilidad de cambios dentro de un código. Algo que no sabía era del archivo de ".claudeignore", no sabía que existía algo así dentro de la sintaxis de Claude, lo que normalmente hago es poner las reglas y especificaciones dentro de settings.json en ".claude" para denegar los permisos de acceso, esto es 100% nuevo para mi.
 
 ## Notas del usuario
 
