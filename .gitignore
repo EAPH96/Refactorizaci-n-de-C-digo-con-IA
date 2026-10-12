@@ -19,8 +19,11 @@ src/datos_ejemplo.json
 *.log
 
 # Documentación de trabajo local: investigación, plan, prompts, caracterización,
-# visor HTML y config.yaml. No forma parte del entregable del PR.
+# visor HTML y config.yaml. No forma parte del entregable del PR. Esto es para tener la trazabilidad de las ejecuciones de promtps.
 Documentación/
+
+# Documentos del curso (formato de entrega, plan y rúbrica): referencia local
+*.docx
 
 # Configuración local de Claude Code (permisos de esta máquina)
 .claude/
